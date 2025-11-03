@@ -26,8 +26,6 @@ class TestLaskin(unittest.TestCase):
         io = StubIO(["100", "200", "6", "-3", "-9999"])
         laskin = Laskin(io)
         laskin.suorita()
-        print(io.outputs)
-        print("asdasd")
-        # self.assertEqual(io.outputs)
+        self.assertEqual(io.outputs[1], "Summa: -3")
         
         
