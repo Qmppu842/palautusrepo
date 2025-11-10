@@ -22,18 +22,21 @@ def main():
         # print(player)
         pass
 
-    # where = "nationality"
-    # where_value = "FIN"
-    where = "goals"
-    where_value = "9"
+    where = "nationality"
+    where_value = "FIN"
+    # where = "goals"
+    # where_value = "9"
 
     collected = []
     collected = list(filter(lambda x: str(getattr(x, where)) == where_value, players))
 
+    collected = sorted(collected, key=lambda x: -(x.goals + x.assists))
+
     print("pelaajat:")
 
-    for player in collected:
-        print(player.dyna_str(where))
+    for player in collected[:10]:
+        # print(player.dyna_str(where))
+        print(player.stats_str())
         pass
 
 
