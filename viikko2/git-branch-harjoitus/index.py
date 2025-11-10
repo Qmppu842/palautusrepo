@@ -14,5 +14,7 @@ print(f"Lukujen {x} ja {y} erotus on {erotus(x, y)}")  # muutos bugikorjaus-bran
 print(f"{x} + {y} = {summa(x, y)}") # muutos mainissa
 print(f"{x} - {y} = {erotus(x, y)}") # muutos mainissa
 
+print(f"{x} * {y} = {tulo(x, y)}") 
+
 logger("lopetetaan ohjelma")
 print("goodbye!")  # lisäys bugikorjaus-branchissa
