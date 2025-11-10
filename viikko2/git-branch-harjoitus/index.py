@@ -21,3 +21,6 @@ print(f"{x} ^ {y} = {expo(x, y)}")
 
 logger("lopetetaan ohjelma")
 print("goodbye!")  # lisäys bugikorjaus-branchissa
+
+
+print(f"moi moi")
