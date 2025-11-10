@@ -3,6 +3,8 @@
 from logger import logger
 from summa import summa
 from erotus import erotus
+from tulo import tulo
+form expo import expo
 
 logger("aloitetaan ohjelma")  # muutos mainissa
 
@@ -15,6 +17,7 @@ print(f"{x} + {y} = {summa(x, y)}") # muutos mainissa
 print(f"{x} - {y} = {erotus(x, y)}") # muutos mainissa
 
 print(f"{x} * {y} = {tulo(x, y)}") 
+print(f"{x} ^ {y} = {expo(x, y)}")
 
 logger("lopetetaan ohjelma")
 print("goodbye!")  # lisäys bugikorjaus-branchissa
