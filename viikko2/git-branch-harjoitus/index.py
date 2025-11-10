@@ -4,7 +4,7 @@ from logger import logger
 from summa import summa
 from erotus import erotus
 from tulo import tulo
-form expo import expo
+from expo import expo
 
 logger("aloitetaan ohjelma")  # muutos mainissa
 
