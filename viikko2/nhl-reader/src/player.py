@@ -1,10 +1,10 @@
 class Player:
-    def __init__(self, dict):
-        self.name = dict["name"]
-        self.nationality = dict["nationality"]
-        self.team = dict["team"]
-        self.goals = dict["goals"]
-        self.assists = dict["assists"]
+    def __init__(self, player_data_dict):
+        self.name = player_data_dict["name"]
+        self.nationality = player_data_dict["nationality"]
+        self.team = player_data_dict["team"]
+        self.goals = player_data_dict["goals"]
+        self.assists = player_data_dict["assists"]
 
     def dyna_str(self, attribute):
         return f"{self.name:20}, {getattr(self, attribute)}"
