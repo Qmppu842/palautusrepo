@@ -2,42 +2,47 @@ import requests
 from player import Player
 
 
+class PlayerReader:
+    def __init__(self, url: str):
+        self.url = url
+
+    def get_players(self):
+        response = requests.get(self.url).json()
+
+        players = []
+        for player_dict in response:
+            player = Player(player_dict)
+            players.append(player)
+
+        return players
+
+
+class PlayerStats:
+    def __init__(self, player_reader: PlayerReader):
+        self.pr = player_reader
+
+    def gettetete(self, where: str = "nationality", where_value: str = "FIN"):
+        collected = list(
+            filter(
+                lambda x: str(getattr(x, where)) == where_value, self.pr.get_players()
+            )
+        )
+        return collected
+
+    def top_scorers_by_nationality(self, nationality: str):
+        collected = self.gettetete(where_value=nationality)
+        collected = sorted(collected, key=lambda x: -(x.goals + x.assists))
+        return collected
+
+
 def main():
     url = "https://studies.cs.helsinki.fi/nhlstats/2024-25/players"
-    response = requests.get(url).json()
-
-    print("JSON-muotoinen vastaus:")
-    # print(response)
-
-    players = []
-
-    for player_dict in response:
-        # print(f"player_dict: {player_dict}")
-        player = Player(player_dict)
-        players.append(player)
-
-    # print("Oliot:")
+    reader = PlayerReader(url)
+    stats = PlayerStats(reader)
+    players = stats.top_scorers_by_nationality("FIN")
 
     for player in players:
-        # print(player)
-        pass
-
-    where = "nationality"
-    where_value = "FIN"
-    # where = "goals"
-    # where_value = "9"
-
-    collected = []
-    collected = list(filter(lambda x: str(getattr(x, where)) == where_value, players))
-
-    collected = sorted(collected, key=lambda x: -(x.goals + x.assists))
-
-    print("pelaajat:")
-
-    for player in collected[:10]:
-        # print(player.dyna_str(where))
-        print(player.stats_str())
-        pass
+        print(player)
 
 
 if __name__ == "__main__":

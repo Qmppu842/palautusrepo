@@ -6,11 +6,8 @@ class Player:
         self.goals = dict["goals"]
         self.assists = dict["assists"]
 
-    def __str__(self):
-        return f"{self.name}, {self.nationality}"
-
     def dyna_str(self, attribute):
         return f"{self.name:20}, {getattr(self, attribute)}"
 
-    def stats_str(self):
+    def __str__(self):
         return f"{self.name:20} {self.team:15} {self.goals:2} + {self.assists:2} = {(self.goals + self.assists):2}"
