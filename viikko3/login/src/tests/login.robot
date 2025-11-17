@@ -19,7 +19,8 @@ Login With Incorrect Password
 
 Login With Nonexistent Username
     Set Username  kalakauppias
-    Set Password  lohi
+    Set Password  lohi55688
+    Click Button  Login
     Login Should Fail With Message  Invalid username or password
 
 *** Keywords ***
