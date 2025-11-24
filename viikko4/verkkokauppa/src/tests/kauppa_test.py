@@ -41,9 +41,8 @@ class TestKauppa(unittest.TestCase):
         # varmistetaan, että metodia tilisiirto on kutsuttu
         pankki_mock.tilisiirto.assert_called()
         # toistaiseksi ei välitetä kutsuun liittyvistä argumenteista
-        
-        
-    #pylint: disable=w0201
+
+    # pylint: disable=w0201
     def mock_kauppa_initor(self):
         self.pankki_mock = Mock()
         self.viitegeneraattori_mock = Mock()
@@ -57,34 +56,69 @@ class TestKauppa(unittest.TestCase):
         def varasto_saldo(tuote_id):
             if tuote_id == 1:
                 return 10
+            if tuote_id == 2:
+                return 10
+            if tuote_id == 3:
+                return 0
 
         # tehdään toteutus hae_tuote-metodille
         def varasto_hae_tuote(tuote_id):
             if tuote_id == 1:
                 return Tuote(1, "maito", 5)
+            if tuote_id == 2:
+                return Tuote(2, "ale koiran ruoka", 999)
+            if tuote_id == 3:
+                return Tuote(3, "premium koiran ruoka", 23)
 
         # otetaan toteutukset käyttöön
         self.varasto_mock.saldo.side_effect = varasto_saldo
         self.varasto_mock.hae_tuote.side_effect = varasto_hae_tuote
 
         # alustetaan kauppa
-        #pylint: disable=w0201
-        self.kauppa = Kauppa(self.varasto_mock, self.pankki_mock, self.viitegeneraattori_mock)
+        # pylint: disable=w0201
+        self.kauppa = Kauppa(
+            self.varasto_mock, self.pankki_mock, self.viitegeneraattori_mock
+        )
 
-    def test_Jotain_asiointia_kaupassa(self):
+    def test_asiointi_ja_pankkisiirto_kahdella_eri_tuotteella(self):
+        self.mock_kauppa_initor()
+
+        self.kauppa.aloita_asiointi()
+        self.kauppa.lisaa_koriin(1)
+        self.kauppa.lisaa_koriin(2)
+        self.kauppa.tilimaksu("Lohi Lampela", "988755")
+        self.pankki_mock.tilisiirto.assert_called_once_with(
+            "Lohi Lampela", 42, "988755", "33333-44455", 1004
+        )
+
+    def test_asiointi_ja_pankkisiirto_kahdella_samalla_tuotteella(self):
         self.mock_kauppa_initor()
 
         self.kauppa.aloita_asiointi()
         self.kauppa.lisaa_koriin(1)
         self.kauppa.lisaa_koriin(1)
         self.kauppa.tilimaksu("Lohi Lampela", "988755")
-        self.pankki_mock.tilisiirto.assert_called_once_with("Lohi Lampela", 42,"988755", "33333-44455", 10)
-        
-        
-    def test_Jotain_asiointia_kaupassa_kaksi(self):
+        self.pankki_mock.tilisiirto.assert_called_once_with(
+            "Lohi Lampela", 42, "988755", "33333-44455", 10
+        )
+
+    def test_asiointi_ja_pankkisiirto_kahdella_eri_tuotteella_joista_toinen_loppunut(
+        self,
+    ):
+        self.mock_kauppa_initor()
+
+        self.kauppa.aloita_asiointi()
+        self.kauppa.lisaa_koriin(1)
+        self.kauppa.lisaa_koriin(3)
+        self.kauppa.tilimaksu("Lohi Lampela", "988755")
+        self.pankki_mock.tilisiirto.assert_called_once_with(
+            "Lohi Lampela", 42, "988755", "33333-44455", 5
+        )
+
+    def test_perus_osto_asiointi_yhdella_tuoteella(self):
         pankki_mock = Mock()
         # pankki_mock.tilisiirto
-        
+
         viitegeneraattori_mock = Mock()
 
         # palautetaan aina arvo 42
@@ -113,5 +147,5 @@ class TestKauppa(unittest.TestCase):
         kauppa.aloita_asiointi()
         kauppa.lisaa_koriin(1)
         kauppa.tilimaksu("pekka", "12345")
-        
-        pankki_mock.tilisiirto.assert_called_with("pekka", 42,"12345", ANY, 5)
+
+        pankki_mock.tilisiirto.assert_called_with("pekka", 42, "12345", ANY, 5)
