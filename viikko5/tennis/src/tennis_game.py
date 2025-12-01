@@ -14,13 +14,8 @@ class TennisGame:
     def get_score(self):
         score_as_text = ""
 
-        return score_as_text
-
-    def get_score1(self):
-        score_as_text = ""
-
         if self.player1_score == self.player2_score:
-            self.tie_names()
+            score_as_text = self.tie_names(self.player1_score)
         elif self.player1_score >= 4 or self.player2_score >= 4:
             score_as_text = self.advantage()
         else:
