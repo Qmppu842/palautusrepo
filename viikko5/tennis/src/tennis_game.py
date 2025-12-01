@@ -17,12 +17,12 @@ class TennisGame:
         if self.player1_score == self.player2_score:
             score_as_text = self.tie_names(self.player1_score)
         elif self.player1_score >= 4 or self.player2_score >= 4:
-            score_as_text = self.advantage()
+            score_as_text = self.advantage(self.player1_score - self.player2_score)
         else:
             score_as_text = self.something_insane(score_as_text)
         return score_as_text
 
-    def tie_names(self, score):
+    def tie_names(self, score, score_as_text=""):
         if score == 0:
             score_as_text = "Love-All"
         elif score == 1:
@@ -33,14 +33,11 @@ class TennisGame:
             score_as_text = "Deuce"
         return score_as_text
 
-    def advantage(self):
-        score_as_text = ""
-
-        score_difference = self.player1_score - self.player2_score
+    def advantage(self, score_difference, score_as_text=""):
         if score_difference > 0:
-            score_as_text = self.player1_name
+            score_as_text += self.player1_name
         elif score_difference < 0:
-            score_as_text = self.player2_name
+            score_as_text += self.player2_name
 
         score_diff_magnitude = abs(score_difference)
         if score_diff_magnitude == 1:
