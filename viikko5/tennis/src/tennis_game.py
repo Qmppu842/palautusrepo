@@ -34,16 +34,19 @@ class TennisGame:
         return score_as_text
 
     def advantage(self):
-        minus_result = self.player1_score - self.player2_score
+        score_as_text = ""
 
-        if minus_result == 1:
-            score_as_text = "Advantage player1"
-        elif minus_result == -1:
-            score_as_text = "Advantage player2"
-        elif minus_result >= 2:
-            score_as_text = "Win for player1"
-        else:
-            score_as_text = "Win for player2"
+        score_difference = self.player1_score - self.player2_score
+        if score_difference > 0:
+            score_as_text = self.player1_name
+        elif score_difference < 0:
+            score_as_text = self.player2_name
+
+        score_diff_magnitude = abs(score_difference)
+        if score_diff_magnitude == 1:
+            score_as_text = "Advantage " + score_as_text
+        elif score_diff_magnitude >= 2:
+            score_as_text = "Win for " + score_as_text
         return score_as_text
 
     def something_insane(self, score_as_text):
