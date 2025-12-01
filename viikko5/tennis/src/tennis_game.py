@@ -1,4 +1,6 @@
 class TennisGame:
+    SCORE_NAMES = ["Love", "Fifteen", "Thirty", "Forty"]
+
     def __init__(self, player1_name, player2_name):
         self.player1_name = player1_name
         self.player2_name = player2_name
@@ -12,6 +14,26 @@ class TennisGame:
             self.player2_score += 1
 
     def get_score(self):
+        score_as_text = "-"
+
+        # player1_score_as_text = ""
+        if self.player1_score < len(self.SCORE_NAMES):
+            player1_score_as_text = self.SCORE_NAMES[self.player1_score]
+        else:
+            player1_score_as_text = self.player1_score
+
+        # player2_score_as_text = ""
+        if self.player2_score < len(self.SCORE_NAMES):
+            player2_score_as_text = self.SCORE_NAMES[self.player2_score]
+        else:
+            player2_score_as_text = self.player2_score
+
+        if player1_score_as_text == player2_score_as_text:
+            score_as_text = f"{player1_score_as_text}-All"
+
+        return score_as_text
+
+    def get_score1(self):
         score_as_text = ""
 
         if self.player1_score == self.player2_score:
