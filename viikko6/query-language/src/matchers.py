@@ -29,7 +29,7 @@ class HasAtLeast:
         return player_value >= self._value
 
 
-class All:
+class All1:
     def __init__(self, *matchers, players: list = None):
         self._matchers = matchers
         self.status = True
@@ -43,6 +43,14 @@ class All:
                     return False
 
         return self.status
+
+
+class All:
+    def __init__(self):
+        pass
+
+    def test(self, _):
+        return True
 
 
 class Not:
