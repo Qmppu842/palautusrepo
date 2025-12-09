@@ -47,12 +47,17 @@ def main3():
 
     query = QueryBuilder()
 
-    matcher = (
-        query.plays_in("NYR")
-        .has_at_least(10, "goals")
-        .has_fewer_than(20, "goals")
-        .build()
-    )
+    # matcher = (
+    #     query.plays_in("NYR")
+    #     .has_at_least(10, "goals")
+    #     .has_fewer_than(20, "goals")
+    #     .build()
+    # )
+
+    matcher = query.or_(
+        query.plays_in("PHI").has_at_least(10, "assists").has_fewer_than(10, "goals"),
+        query.plays_in("EDM").has_at_least(50, "points"),
+    ).build()
 
     for player in stats.matches(matcher):
         print(player)
